@@ -36,11 +36,32 @@ function iniciar() {
 function jogar(resposta) {
 	document.getElementById('visor1').value = programa + "->" + num + ":" + resposta;
 
-	if (resposta == gabarito[num-1])
-		pontos++;
+	if (resposta == gabarito[num-1]) {
+		if (tentativa == 1)
+			pontos += 3; // pontos = pontos + 3
+		else if (tentativa == 2)
+			pontos += 2; // pontos = pontos + 2
+		else if (tentativa == 3)
+			pontos++; // pontos = pontos + 1
 
-	num++;
+		num++;
+		tentativa = 1;	
 
+		document.getElementById('visor1').value = programa + "->" + num + ": ";
+		document.getElementById('visor2').value = "Tentativa " + tentativa + " de 3";
+	}
+	else {
+		tentativa++;
+		document.getElementById('visor2').value = "Tentativa " + tentativa + " de 3";
+
+		if (tentativa > 3) {
+			num++;
+			tentativa = 1;
+			document.getElementById('visor1').value = programa + "->" + num + ": ";
+			document.getElementById('visor2').value = "Tentativa " + tentativa + " de 3";
+		}
+	}
+	
 	if (num > 30) {
 		document.getElementById('visor1').value = "***FIM***";
 		document.getElementById('visor2').value = "Pontuação: " + pontos;
